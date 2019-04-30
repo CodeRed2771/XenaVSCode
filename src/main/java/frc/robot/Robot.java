@@ -86,26 +86,26 @@ public class Robot extends TimedRobot {
 		Calibration.loadSwerveCalibration();
 
 		positionChooser = new SendableChooser<String>();
-		positionChooser.addObject("Left", "L");
-		positionChooser.addDefault("Center", "C");
-		positionChooser.addObject("Right", "R");
+		positionChooser.addOption("Left", "L");
+		positionChooser.setDefaultOption("Center", "C");
+		positionChooser.addOption("Right", "R");
 		SmartDashboard.putData("Position", positionChooser);
 
 		autoChooser = new SendableChooser<String>();
-		autoChooser.addObject(autoBaseLine, autoBaseLine);
-		autoChooser.addObject(calibrateSwerveModules, calibrateSwerveModules);
-		autoChooser.addObject(deleteSwerveCalibration, deleteSwerveCalibration);
-		autoChooser.addObject(autoRotateTest, autoRotateTest);
-		autoChooser.addObject(autoCalibrateDrive, autoCalibrateDrive);
-		autoChooser.addDefault(autoCenterSwitch, autoCenterSwitch);
-		autoChooser.addObject(autoSwitchOrScale, autoSwitchOrScale);
-		autoChooser.addObject(autoSideScaleOnly, autoSideScaleOnly);
-		autoChooser.addObject(autoDoNothing, autoDoNothing);
-		autoChooser.addObject(autoDrivePIDTune, autoDrivePIDTune);
-		// autoChooser.addObject(autoSwitchAndScale, autoSwitchAndScale);
-		// autoChooser.addObject(autoScale, autoScale);
-		// autoChooser.addObject(autoStartToSwitch, autoStartToSwitch);
-		// autoChooser.addObject(autoCubeFollow, autoCubeFollow);
+		autoChooser.addOption(autoBaseLine, autoBaseLine);
+		autoChooser.addOption(calibrateSwerveModules, calibrateSwerveModules);
+		autoChooser.addOption(deleteSwerveCalibration, deleteSwerveCalibration);
+		autoChooser.addOption(autoRotateTest, autoRotateTest);
+		autoChooser.addOption(autoCalibrateDrive, autoCalibrateDrive);
+		autoChooser.setDefaultOption(autoCenterSwitch, autoCenterSwitch);
+		autoChooser.addOption(autoSwitchOrScale, autoSwitchOrScale);
+		autoChooser.addOption(autoSideScaleOnly, autoSideScaleOnly);
+		autoChooser.addOption(autoDoNothing, autoDoNothing);
+		autoChooser.addOption(autoDrivePIDTune, autoDrivePIDTune);
+		// autoChooser.addOption(autoSwitchAndScale, autoSwitchAndScale);
+		// autoChooser.addOption(autoScale, autoScale);
+		// autoChooser.addOption(autoStartToSwitch, autoStartToSwitch);
+		// autoChooser.addOption(autoCubeFollow, autoCubeFollow);
 
 		SmartDashboard.putData("Auto choices", autoChooser);
 
@@ -144,7 +144,7 @@ public class Robot extends TimedRobot {
 		double driveXAxisAmount = -gamepad.getSwerveXAxis();
 		double driveRotAxisAmount = powerOf3PreserveSign(gamepad.getSwerveRotAxis());
 
-		if (Lift.driveCautionNeeded()) {
+		// if (Lift.driveCautionNeeded()) {
 			// limit the axis input to slow driving down
 			if (Math.abs(driveYAxisAmount) > .40) {
 				if (driveYAxisAmount < 0)
@@ -158,7 +158,7 @@ public class Robot extends TimedRobot {
 				else
 					driveXAxisAmount = .40;
 			}
-		}
+		// }
 
 		// put some rotational power restrictions in place to make it 
 		// more controlled
@@ -494,23 +494,12 @@ public class Robot extends TimedRobot {
 		if (SmartDashboard.getBoolean("Show Turn Encoders", false)) {
 			DriveTrain.showTurnEncodersOnDash();
 		}
-
-
-	}
-
-	private double powerOf2PreserveSign(double v) {
-		return (v > 0) ? Math.pow(v, 2) : -Math.pow(v, 2);
 	}
 
 	private double powerOf3PreserveSign(double v) {
 		return Math.pow(v, 3);
 	}
-
-	private static Double round2(Double val) {
-		// added this back in on 1/15/18
-		return new BigDecimal(val.toString()).setScale(2, RoundingMode.HALF_UP).doubleValue();
-	}
-
+	
 	private static Double round0(Double val) {
 		// added this back in on 1/15/18
 		return new BigDecimal(val.toString()).setScale(0, RoundingMode.HALF_UP).doubleValue();
